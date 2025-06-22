@@ -10,19 +10,14 @@ import SwiftData
 
 @main
 struct AnglesRecordApp: App {
-    var sharedModelContainer: ModelContainer = {
-        let schema = Schema([
-            AudioRecord.self,
-        ])
-        let modelConfiguration = ModelConfiguration(schema: schema, isStoredInMemoryOnly: false)
+    @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
 
-        do {
-            return try ModelContainer(for: schema, configurations: [modelConfiguration])
-        } catch {
-            fatalError("Could not create ModelContainer: \(error)")
-        }
+    var sharedModelContainer: ModelContainer = {
+        let schema = Schema([ AudioRecord.self ])
+        let config = ModelConfiguration(schema: schema, isStoredInMemoryOnly: false)
+        return try! ModelContainer(for: schema, configurations: [config])
     }()
-    
+
     var body: some Scene {
         WindowGroup {
             ContentView()

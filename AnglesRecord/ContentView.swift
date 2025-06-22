@@ -9,15 +9,21 @@ import SwiftUI
 
 struct ContentView: View {
     @State private var showSplash = true
-    
+    @AppStorage("accessGranted") private var accessGranted = false
+
     var body: some View {
         ZStack {
             if showSplash {
                 SplashView()
                     .transition(.opacity)
             } else {
-                MainView()
-                    .transition(.opacity)
+                if accessGranted {
+                    MainView()
+                        .transition(.opacity)
+                } else {
+                    AccessCodeView()
+                        .transition(.opacity)
+                }
             }
         }
         .onAppear {
